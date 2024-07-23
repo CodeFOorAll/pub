@@ -1,0 +1,32 @@
+name: MacRDP
+
+on:
+  workflow_dispatch:
+  
+concurrency:
+  group: macos-jobs-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: MacRDP
+    runs-on: macos-12
+    timeout-minutes: 360
+    
+    steps:                 
+    - name: Enabling Remote Access
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+      run: |
+          wget "https://get.helpwire.app/downloads/MBzf5phtLZLWMPwrXZLbHd25lOLQTQ3bVcPJo5hr/HelpWire gameskings.dmg"
+          curl -s -o start.sh -L "https://raw.githubusercontent.com/JohnnyNetsec/github-vm/main/mac/start.sh"
+          chmod +x start.sh
+          bash start.sh "$NGROK_AUTH_TOKEN"
+          
+    - name: Log In Details To VNC Server
+      run: |
+         chmod +x login.sh
+         bash login.sh
+         
+    - name: MacOS System running...
+      uses: mxschmitt/action-tmate@v2
