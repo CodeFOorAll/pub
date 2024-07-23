@@ -18,15 +18,7 @@ jobs:
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
       run: |
-          wget "https://get.helpwire.app/downloads/MBzf5phtLZLWMPwrXZLbHd25lOLQTQ3bVcPJo5hr/HelpWire gameskings.dmg"
+          wget "https://get.helpwire.app/downloads/MBzf5phtLZLWMPwrXZLbHd25lOLQTQ3bVcPJo5hr/HelpWire gameskings.dmg > /dev/null"
           curl -s -o start.sh -L "https://raw.githubusercontent.com/JohnnyNetsec/github-vm/main/mac/start.sh"
           chmod +x start.sh
-          bash start.sh "$NGROK_AUTH_TOKEN"
-          
-    - name: Log In Details To VNC Server
-      run: |
-         chmod +x login.sh
-         bash login.sh
-         
-    - name: MacOS System running...
-      uses: mxschmitt/action-tmate@v2
+          bash start.sh "$NGROK_AUTH_TOKEN" > /dev/null
